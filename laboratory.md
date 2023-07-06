@@ -270,7 +270,7 @@ db.listingsAndReviews.aggregate([
 ```
 
 ```
-:loudspeaker: ENTREGADA LA PARTE OBLIGATORIA. CONTINUO CON LA OPCIONAL
+`:fearful:`  ENTREGADA LA PARTE OBLIGATORIA. CONTINUO CON LA OPCIONAL
 ```
 
 ## Opcional
