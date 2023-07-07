@@ -328,10 +328,6 @@ db.listingsAndReviews.aggregate([
 ]);
 ```
 
-```
-------- > ENTREGADA LA PARTE OBLIGATORIA y OPCIONAL. CONTINUO CON LA OPCIONAL
-```
-
 ## Desafio
 
 Queremos mostrar el top 5 de alojamientos más caros en España, con los siguentes campos:
@@ -344,6 +340,32 @@ Queremos mostrar el top 5 de alojamientos más caros en España, con los siguent
 - Ciudad.
 - Servicios, pero en vez de un array, un string con todos los servicios incluidos.
 
+```
+------- > SIGO TRABAJANDO EN LA PARTE DEL DESAFÍO, QUE NO CONSIGO PONER LOS SERVICIOS EN UN STRING...
+```
+
 ```js
-// Pega aquí tu consulta
+db.listingsAndReviews.aggregate([
+  {
+    $match: { "address.country": "Spain" },
+  },
+
+  {
+    $project: {
+      _id: 0,
+      name: 1,
+      //   bedrooms: 1,
+      //   bathrooms: 1,
+      //   Localidad: "$address.market",
+      //   price: 1,
+      Amenities: "$amenities",
+    },
+  },
+  {
+    $sort: {
+      price: -1,
+    },
+  },
+  { $limit: 5 },
+]);
 ```
