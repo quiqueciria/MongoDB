@@ -270,28 +270,66 @@ db.listingsAndReviews.aggregate([
 ]);
 ```
 
-```
-------- > ENTREGADA LA PARTE OBLIGATORIA. CONTINUO CON LA OPCIONAL
-```
-
 ## Opcional
 
 - Queremos saber el precio medio de alquiler de airbnb en España.
 
 ```js
-// Pega aquí tu consulta
+db.listingsAndReviews.aggregate([
+  {
+    $match: { "address.country": "Spain" },
+  },
+  {
+    $group: {
+      _id: 0,
+      precioMedio: { $avg: "$price" },
+    },
+  },
+]);
 ```
 
 - ¿Y si quisieramos hacer como el anterior, pero sacarlo por paises?
 
 ```js
-// Pega aquí tu consulta
+db.listingsAndReviews.aggregate([
+  {
+    $group: {
+      _id: "$address.country",
+      precioMedio: { $avg: "$price" },
+    },
+  },
+]);
 ```
 
 - Repite los mismos pasos pero agrupando también por numero de habitaciones.
 
 ```js
-// Pega aquí tu consulta
+db.listingsAndReviews.aggregate([
+  {
+    $match: { "address.country": "Spain" },
+  },
+  {
+    $group: {
+      _id: 0,
+      numeroHabitaciones: { $sum: "$bedrooms" },
+    },
+  },
+]);
+```
+
+```js
+db.listingsAndReviews.aggregate([
+  {
+    $group: {
+      _id: "$address.country",
+      numeroHabitaciones: { $sum: "$bedrooms" },
+    },
+  },
+]);
+```
+
+```
+------- > ENTREGADA LA PARTE OBLIGATORIA y OPCIONAL. CONTINUO CON LA OPCIONAL
 ```
 
 ## Desafio
