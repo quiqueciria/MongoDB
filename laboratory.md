@@ -3,7 +3,8 @@
 **Pregunta**. Si montaras un sitio real, ¿Qué posibles problemas pontenciales les ves a como está almacenada la información?
 
 ```md
-Indica aquí que problemas ves
+Pues supongo que tendriámos que ver como vamos a montar el sitio real y ver si la estrucutura de datos que tenemos es la más adecuada para el acceso y consulta que vamos a tener. Teniendo en cuenta que es un "scrappeo" entiendo que a lo mejor hay que reformatear la estructura de datos para lo que nos convenga, que quizás es mejor tenerlo de otra manera, pero insisto, creo que necesitamos saber que necesidades tenemos antes.
+Viendo la estructura de datos que tenemos actualmente, creo que a primera vista está bien organizado y accesible.
 ```
 
 ## Obligatorio
