@@ -37,15 +37,10 @@ db.listingsAndReviews
             $eq: "Spain",
           },
         },
-        {
-          price: {
-            $gt: 100.0,
-          },
-        },
       ],
     },
     {
-      _id: 1,
+      _id: 0,
       name: 1,
       price: 1,
       beds: 1,
@@ -125,8 +120,7 @@ db.listingsAndReviews.find(
       $gte: 2,
     },
     amenities: {
-      $eq: "Wifi",
-      $eq: "Pets allowed",
+      $all: ["Wifi", "Pets allowed"],
     },
   },
   {
@@ -148,9 +142,6 @@ db.listingsAndReviews.find(
   {
     price: {
       $lte: 50.0,
-    },
-    security_deposit: {
-      $eq: 0,
     },
     "review_scores.review_scores_rating": {
       $gte: 88,
@@ -176,7 +167,6 @@ db.listingsAndReviews.find(
     bathrooms: 1,
     "address.market": 1,
     "review_scores.review_scores_rating": 1,
-    security_deposit: 1,
   }
 );
 ```
@@ -253,12 +243,6 @@ db.listingsAndReviews.aggregate([
 
 ```js
 db.listingsAndReviews.aggregate([
-  {
-    $project: {
-      _id: 0,
-      "address.country": 1,
-    },
-  },
   {
     $group: {
       _id: "$address.country",
