@@ -290,23 +290,15 @@ db.listingsAndReviews.aggregate([
 ```js
 db.listingsAndReviews.aggregate([
   {
-    $match: { "address.country": "Spain" },
-  },
-  {
     $group: {
-      _id: 0,
-      numeroHabitaciones: { $sum: "$bedrooms" },
+      _id: { country: "$address.country", bedrooms: "$bedrooms" },
+      precioMedio: { $avg: "$price" },
     },
   },
-]);
-```
-
-```js
-db.listingsAndReviews.aggregate([
   {
-    $group: {
-      _id: "$address.country",
-      numeroHabitaciones: { $sum: "$bedrooms" },
+    $sort: {
+      "_id.country": 1,
+      "_id.bedrooms": -1,
     },
   },
 ]);
@@ -329,6 +321,8 @@ Queremos mostrar el top 5 de alojamientos más caros en España, con los siguent
 ```
 
 ```js
+use("myAirbnb");
+
 db.listingsAndReviews.aggregate([
   {
     $match: { "address.country": "Spain" },
@@ -338,11 +332,30 @@ db.listingsAndReviews.aggregate([
     $project: {
       _id: 0,
       name: 1,
+      amenitiesV: {
+        $reduce: {
+          input: "$amenities",
+          initialValue: "o",
+          in: {
+            $concat: [
+              "$$value",
+              ", ",
+              "$$this",
+              {
+                $cond: {
+                  if: { initialValue: "" },
+                  then: "44",
+                  else: ", ",
+                },
+              },
+            ],
+          },
+        },
+      },
       //   bedrooms: 1,
       //   bathrooms: 1,
       //   Localidad: "$address.market",
       //   price: 1,
-      Amenities: "$amenities",
     },
   },
   {
