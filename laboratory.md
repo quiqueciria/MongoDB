@@ -316,6 +316,8 @@ Queremos mostrar el top 5 de alojamientos más caros en España, con los siguent
 - Ciudad.
 - Servicios, pero en vez de un array, un string con todos los servicios incluidos.
 
+**1. Resuelto con el ejemplo de concatenación de un string**, como pone en la documentación de "$reduce"
+
 ```js
 use("myAirbnb");
 
@@ -342,6 +344,46 @@ db.listingsAndReviews.aggregate([
                   else: ", ",
                 },
               },
+              "$$this",
+            ],
+          },
+        },
+      },
+      bedrooms: 1,
+      bathrooms: 1,
+      Localidad: "$address.market",
+      price: 1,
+    },
+  },
+  {
+    $sort: {
+      price: -1,
+    },
+  },
+  { $limit: 5 },
+]);
+```
+
+**2. Resuelto con el "$cond"**, con una expresión booleana"
+
+```js
+db.listingsAndReviews.aggregate([
+  {
+    $match: { "address.country": "Spain" },
+  },
+
+  {
+    $project: {
+      _id: 0,
+      name: 1,
+      amenitiesV: {
+        $reduce: {
+          input: "$amenities",
+          initialValue: "",
+          in: {
+            $concat: [
+              "$$value",
+              { $cond: [{ $eq: ["$$value", ""] }, "", ", "] },
               "$$this",
             ],
           },
